@@ -29,84 +29,87 @@
         private void InitializeComponent()
         {
             textBoxInput = new TextBox();
-            button1 = new Button();
+            buttonTranslate = new Button();
             textBoxOutput = new TextBox();
-            programOutput = new TextBox();
-            button2 = new Button();
-            button3 = new Button();
+            buttonFixOne = new Button();
+            buttonSave = new Button();
+            buttonLoad = new Button();
             SuspendLayout();
             // 
             // textBoxInput
             // 
-            textBoxInput.Location = new Point(8, 7);
-            textBoxInput.Margin = new Padding(2, 2, 2, 2);
+            textBoxInput.Location = new Point(7, 7);
+            textBoxInput.Margin = new Padding(2);
             textBoxInput.Multiline = true;
             textBoxInput.Name = "textBoxInput";
-            textBoxInput.Size = new Size(175, 111);
+            textBoxInput.Size = new Size(175, 248);
             textBoxInput.TabIndex = 0;
             textBoxInput.TextChanged += textBoxInput_TextChanged;
             // 
-            // button1
+            // buttonTranslate
             // 
-            button1.Location = new Point(186, 7);
-            button1.Margin = new Padding(2, 2, 2, 2);
-            button1.Name = "button1";
-            button1.Size = new Size(180, 41);
-            button1.TabIndex = 1;
-            button1.Text = "przetłumacz";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
+            buttonTranslate.Location = new Point(186, 7);
+            buttonTranslate.Margin = new Padding(2);
+            buttonTranslate.Name = "buttonTranslate";
+            buttonTranslate.Size = new Size(180, 41);
+            buttonTranslate.TabIndex = 1;
+            buttonTranslate.Text = "translate";
+            buttonTranslate.UseVisualStyleBackColor = true;
+            buttonTranslate.Click += button1_Click;
             // 
             // textBoxOutput
             // 
             textBoxOutput.Location = new Point(370, 7);
-            textBoxOutput.Margin = new Padding(2, 2, 2, 2);
+            textBoxOutput.Margin = new Padding(2);
             textBoxOutput.Multiline = true;
             textBoxOutput.Name = "textBoxOutput";
             textBoxOutput.Size = new Size(175, 248);
             textBoxOutput.TabIndex = 2;
             // 
-            // programOutput
+            // buttonFixOne
             // 
-            programOutput.Location = new Point(8, 145);
-            programOutput.Margin = new Padding(2, 2, 2, 2);
-            programOutput.Multiline = true;
-            programOutput.Name = "programOutput";
-            programOutput.Size = new Size(175, 110);
-            programOutput.TabIndex = 3;
+            buttonFixOne.Location = new Point(186, 52);
+            buttonFixOne.Margin = new Padding(2);
+            buttonFixOne.Name = "buttonFixOne";
+            buttonFixOne.Size = new Size(180, 41);
+            buttonFixOne.TabIndex = 4;
+            buttonFixOne.Text = "fix one";
+            buttonFixOne.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // buttonSave
             // 
-            button2.Location = new Point(187, 58);
-            button2.Margin = new Padding(2, 2, 2, 2);
-            button2.Name = "button2";
-            button2.Size = new Size(81, 41);
-            button2.TabIndex = 4;
-            button2.Text = "popraw 1 błąd";
-            button2.UseVisualStyleBackColor = true;
+            buttonSave.Location = new Point(186, 97);
+            buttonSave.Margin = new Padding(2);
+            buttonSave.Name = "buttonSave";
+            buttonSave.Size = new Size(180, 41);
+            buttonSave.TabIndex = 6;
+            buttonSave.Text = "save";
+            buttonSave.UseVisualStyleBackColor = true;
+            buttonSave.Click += buttonSave_Click_1;
             // 
-            // button3
+            // buttonLoad
             // 
-            button3.Location = new Point(284, 58);
-            button3.Margin = new Padding(2, 2, 2, 2);
-            button3.Name = "button3";
-            button3.Size = new Size(82, 41);
-            button3.TabIndex = 5;
-            button3.Text = "popraw 2 błędy";
-            button3.UseVisualStyleBackColor = true;
+            buttonLoad.Location = new Point(186, 142);
+            buttonLoad.Margin = new Padding(2);
+            buttonLoad.Name = "buttonLoad";
+            buttonLoad.Size = new Size(180, 41);
+            buttonLoad.TabIndex = 7;
+            buttonLoad.Text = "load";
+            buttonLoad.UseVisualStyleBackColor = true;
+            buttonLoad.Click += buttonLoad_Click;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(560, 270);
-            Controls.Add(button3);
-            Controls.Add(button2);
-            Controls.Add(programOutput);
+            Controls.Add(buttonLoad);
+            Controls.Add(buttonSave);
+            Controls.Add(buttonFixOne);
             Controls.Add(textBoxOutput);
-            Controls.Add(button1);
+            Controls.Add(buttonTranslate);
             Controls.Add(textBoxInput);
-            Margin = new Padding(2, 2, 2, 2);
+            Margin = new Padding(2);
             Name = "Form1";
             Text = "Form1";
             ResumeLayout(false);
@@ -116,10 +119,11 @@
         #endregion
 
         private TextBox textBoxInput;
-        private Button button1;
+        private Button buttonTranslate;
         private TextBox textBoxOutput;
         private TextBox programOutput;
-        private Button button2;
-        private Button button3;
+        private Button buttonFixOne;
+        private Button buttonSave;
+        private Button buttonLoad;
     }
 }

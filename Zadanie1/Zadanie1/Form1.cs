@@ -28,17 +28,20 @@ namespace Zadanie1
         private void button1_Click(object sender, EventArgs e)
         {
             string userInput = textBoxInput.Text;
-            textBoxOutput.Text = ToBinaryString(Encoding.UTF8, userInput);
+            textBoxTranslated.Text = ToBinaryString(Encoding.UTF8, userInput);
         }
 
+        //button used to save to file
+        // file localizaction: */Zadani1/bin/Debug/net6.0-windows/
         private void buttonSave_Click_1(object sender, EventArgs e)
         {
-            byte[] bytesToWrite = Encoding.UTF8.GetBytes(textBoxOutput.Text);
+            byte[] bytesToWrite = Encoding.UTF8.GetBytes(textBoxTranslated.Text);
             File.WriteAllBytes("tmp.txt", bytesToWrite);
 
-            MessageBox.Show($"Zapisano tekst '{textBoxOutput.Text}' do pliku '{"tmp.txt"}'");
+            MessageBox.Show($"Zapisano tekst '{textBoxTranslated.Text}' do pliku '{"tmp.txt"}'");
         }
 
+        //button used to load from file
         private void buttonLoad_Click(object sender, EventArgs e)
         {
             string fileName = "tmp.txt";
@@ -49,9 +52,30 @@ namespace Zadanie1
             }
             using (StreamReader reader = new StreamReader(fileName))
             {
-                textBoxOutput.Text = reader.ReadToEnd();
+                textBoxTranslated.Text = reader.ReadToEnd();
                 MessageBox.Show($"Wczytano tekst z pliku '{fileName}'");
             }
         }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        //private Bitmap MyImage;
+        //public void ShowMyImage(String fileToDisplay, int xSize, int ySize)
+        //{
+        //    // Sets up an image object to be displayed.
+        //    if (MyImage != null)
+        //    {
+        //        MyImage.Dispose();
+        //    }
+
+        //    // Stretches the image to fit the pictureBox.
+        //    pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+        //    MyImage = new Bitmap(fileToDisplay);
+        //    pictureBox1.ClientSize = new Size(xSize, ySize);
+        //    pictureBox1.Image = (Image)MyImage;
+        //}
     }
 }

@@ -126,6 +126,7 @@
             textBoxOutput.Name = "textBoxOutput";
             textBoxOutput.Size = new Size(192, 246);
             textBoxOutput.TabIndex = 9;
+            textBoxOutput.TextChanged += textBoxOutput_TextChanged;
             // 
             // buttonTranslateToOne
             // 
@@ -149,6 +150,7 @@
             // 
             // pictureBox1
             // 
+            pictureBox1.BackgroundImageLayout = ImageLayout.Center;
             pictureBox1.Location = new Point(627, 45);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(312, 380);
@@ -159,38 +161,42 @@
             // labelText
             // 
             labelText.AutoSize = true;
-            labelText.Location = new Point(37, 18);
+            labelText.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            labelText.Location = new Point(48, 18);
             labelText.Name = "labelText";
-            labelText.Size = new Size(139, 15);
+            labelText.Size = new Size(117, 21);
             labelText.TabIndex = 13;
-            labelText.Text = "Tekst do przetłumaczenia";
+            labelText.Text = "text to translate";
             // 
             // labelTranslate
             // 
             labelTranslate.AutoSize = true;
-            labelTranslate.Location = new Point(260, 18);
+            labelTranslate.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            labelTranslate.Location = new Point(264, 18);
             labelTranslate.Name = "labelTranslate";
-            labelTranslate.Size = new Size(125, 15);
+            labelTranslate.Size = new Size(108, 21);
             labelTranslate.TabIndex = 14;
-            labelTranslate.Text = "Tekst w formie bitowej";
+            labelTranslate.Text = "text translated";
             // 
             // LabelOutput
             // 
             LabelOutput.AutoSize = true;
-            LabelOutput.Location = new Point(458, 18);
+            LabelOutput.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            LabelOutput.Location = new Point(463, 18);
             LabelOutput.Name = "LabelOutput";
-            LabelOutput.Size = new Size(120, 15);
+            LabelOutput.Size = new Size(128, 21);
             LabelOutput.TabIndex = 15;
-            LabelOutput.Text = "Tekst przetłumaczony";
+            LabelOutput.Text = "text re-translated";
             // 
             // labelImage
             // 
             labelImage.AutoSize = true;
-            labelImage.Location = new Point(737, 18);
+            labelImage.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            labelImage.Location = new Point(725, 18);
             labelImage.Name = "labelImage";
-            labelImage.Size = new Size(142, 15);
+            labelImage.Size = new Size(126, 21);
             labelImage.TabIndex = 16;
-            labelImage.Text = "obrazek do zaieszenia oka";
+            labelImage.Text = "a really nice tank";
             // 
             // Form1
             // 

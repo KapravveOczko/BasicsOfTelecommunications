@@ -1,6 +1,5 @@
-using System.Drawing.Design;
-using System.Drawing.Drawing2D;
 using System.Text;
+using Zadanie1;
 
 namespace Zadanie1
 {
@@ -25,7 +24,7 @@ namespace Zadanie1
         }
 
         //translates text to 0's and 1's
-        static string ToBinaryString(Encoding encoding, string text) // used to convert asci to binarry
+        static string toBits(Encoding encoding, string text) // used to convert asci to binarry
         {
             return string.Join("", encoding.GetBytes(text).Select(n => Convert.ToString(n, 2).PadLeft(8, '0')));
         }
@@ -46,7 +45,7 @@ namespace Zadanie1
         private void button1_Click(object sender, EventArgs e)
         {
             string userInput = textBoxInput.Text;
-            textBoxTranslated.Text = ToBinaryString(Encoding.UTF8, userInput);
+            textBoxTranslated.Text = toBits(Encoding.UTF8, userInput);
         }
 
         //button used to save to file
@@ -77,9 +76,8 @@ namespace Zadanie1
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            showMyImage("img.jpg",312,380);
+            showMyImage("img.jpg", 312, 380);
         }
-
 
     }
 }

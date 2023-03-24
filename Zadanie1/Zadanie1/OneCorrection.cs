@@ -54,7 +54,6 @@ namespace Zadanie1
 
         public void encodeWord(int[] word)
         {
-            int position=0;
             int[] output = new int[12];
             for (int i=0; i<12; i++) 
             {output[i] = 0;}
@@ -73,6 +72,25 @@ namespace Zadanie1
             for (int i=0; i!=12; i++)
             {
                 output[i] = output[i]%2;
+            }
+        }
+
+
+        public void decodeWord(int[] input) 
+        {
+            int[] test = new int[4];
+
+            for (int i = 0; i != 12; i++)
+            {
+                for (int j = 0; j != 4; j++)
+                {
+                    test[j] = test[j] + H[j][i] * input[i];
+                }
+            }
+
+            for (int i=0; i!=4; i++)
+            {
+                test[i] = test[i] % 2;
             }
         }
 

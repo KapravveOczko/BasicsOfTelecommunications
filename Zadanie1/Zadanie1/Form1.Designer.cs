@@ -126,6 +126,7 @@
             textBoxOutput.Name = "textBoxOutput";
             textBoxOutput.Size = new Size(192, 246);
             textBoxOutput.TabIndex = 9;
+            EventHandler textBoxOutput_TextChanged = null; //i added it only for not fucking tje program up purposes
             textBoxOutput.TextChanged += textBoxOutput_TextChanged;
             // 
             // buttonTranslateToOne

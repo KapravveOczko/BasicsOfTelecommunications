@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -44,26 +45,32 @@ namespace Zadanie1
                                             };
 
 
-        public void encodeText(string[] input)
+        public string encodeText(string text)
         {
-            //input = text to translate
-
-            string output = "";
-            string tmpWord = "";
+            byte[] textInBytes = Encoding.UTF8.GetBytes(text);
             int[] word = new int[8];
+            int position = 0;
+            string encodedText = "";
 
-            //output is a encoded textusing G matrix
-            // tmpWord ia a buffor variable used to hold word before converting it to int[]
-            //word[] is a variable used dor encodWord function
+            //textInBytes = holds text translated to bytes
+            //word[] = holds word with will be send to encodeWord function
+            //position = used to transver bits from textInBytes to word[]
+            //encodedText = holds encoded text
 
-            for (int i=0; i!= input.Length; i++) 
+            for (int i = 0; i!=text.Length*8; i++)
             {
-
+                word[position] = textInBytes[i];
+                if (position == 7)
+                {
+                    position = 0;
+                }
+                encodedText += encodeWord(word);
             }
 
+            return encodedText;
         }
 
-        public void encodeWord(int[] word)
+        public string encodeWord(int[] word)
         {
             int[] output = new int[12];
             for (int i=0; i<12; i++) 
@@ -86,13 +93,22 @@ namespace Zadanie1
             {
                 output[i] = output[i]%2;
             }
+
+            return bitsToStringBits(output, 12);
         }
 
+
+        public void decodeText(BitArray text)
+        {
+
+        }
 
         public void decodeWord(int[] input) 
         {
             int[] test = new int[4];
             int parrityOutput = 0;
+
+            string output = "";
 
             // test[]            = holds output of parity bits after using H matrix
             // parrityOutput     = holds position of wrong bit
@@ -134,32 +150,45 @@ namespace Zadanie1
                 }
             }
 
+            //a part when we correct mistake
+
             if (parrityOutput != 0)
             {
-                correctError(parrityOutput, input);
+                if (input[parrityOutput - 1] == 0)
+                {
+                    input[parrityOutput - 1] = 1;
+                }
+                else
+                {
+                    input[parrityOutput - 1] = 0;
+                }
             }
+
 
         }
 
-        public void correctError(int position, int[] word) //not tested yet
+        public string bitsToStringBits(int[] input, int length)
         {
-            //takes position of wrong bit  and repears it
-            //word is 8 or 12 bits? (12 probably)
+            string output = "";
 
-            if (word[position-1] == 0)
+            for (int i=0; i!= length; i++)
             {
-                word[position - 1] = 1;
+                output = output + input[i];
             }
-            else
-            {
-                word[position - 1] = 0;
-            }
-
+            return output;
         }
 
 
-    }
+        public string BitToString(BitArray bits)
+        {
+            byte[] byteArray = new byte[(bits.Length + 7) / 8];
+            bits.CopyTo(byteArray, 0);
+            Encoding utf8 = Encoding.UTF8;
+            string result = utf8.GetString(byteArray);
 
+            return result;
+        }
+    }
    
 
 }

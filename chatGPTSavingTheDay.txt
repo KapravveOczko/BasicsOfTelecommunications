@@ -1,0 +1,341 @@
+//UTILS
+
+//---------------------------------------------------------------
+
+
+public static string Encode(string message, int hMatrixColumnsNumber, int[][] hMatrix) 
+{
+    string result = "";
+    // Przechowuje każdy pojedynczy bajt wiadomości, np. dla "text" długość tablicy bytesArray wynosi 4
+    byte[] bytesArray = Encoding.UTF8.GetBytes(message);
+    foreach (byte singleByte in bytesArray) {                                             // Dla każdego bajtu z tablicy...
+        string byteToBits = "";
+        if (Convert.ToString(singleByte, 2).Length != 8) {                      // Sprawdza, czy długość nie jest równa 8
+            for (int i = Convert.ToString(singleByte, 2).Length; i < 8; i++) {  // I w takim przypadku dodaje tyle zer, ile jest potrzebnych
+                byteToBits += '0';
+            }
+            byteToBits += Convert.ToString(singleByte, 2);                 // Dodaje ten bajt do ciągu
+        }
+        result += byteToBits;
+        result += CalculateHE(byteToBits, hMatrixColumnsNumber, hMatrix, 8);    // Tutaj używane są bity parzystości
+    }
+    return result;
+}
+
+public static string CalculateHE(string byteToBits, int hMatrixColumnsNumber, int[][] hMatrix, int parityBitsCount) 
+{
+    string result = "";
+    for (int i = 0; i < hMatrixColumnsNumber; i++) {                                // Dla każdej kolumny macierzy H...
+        int sum = 0;
+        for (int j = 0; j < byteToBits.Length; j++) {                                // ...i dla każdego bitu bajtu...
+            if (hMatrix[j][i] == 1) {
+                sum += (int)Char.GetNumericValue(byteToBits[j]);                      // ...jeśli wartość w macierzy H wynosi 1, dodaj wartość bitu do sumy
+            }
+        }
+        result += (sum % 2).ToString();                                               // Dodaj do wyniku bit parzystości
+    }
+    return result;
+}
+
+//-----------------------------------------------------------------------------
+
+//Zwróć uwagę, że przepisując kod, musiałem również przepisać metodę CalculateHE, która jest wykorzystywana w oryginalnej metodzie encode.
+
+//-----------------------------------------------------------------------------
+
+/**
+ * Zwraca ciąg znaków zawierający wartości kolumny macierzy
+ * @param matrix
+ * @param column
+ * @param numberOfColumns
+ * @return
+ */
+public static string GetCol(int[][] matrix, int column, int numberOfColumns) 
+{
+    int[] bitsArray = matrix.Select(row => row[column]).ToArray();
+    string result = "";
+    for (int i = 0; i < numberOfColumns; i++) {
+        result += bitsArray[i];
+    }
+    return result;
+}
+
+//-----------------------------------------------------------------------------
+	//Uwaga: w przepisanym kodzie użyłem metody Select zamiast mapToInt, ponieważ ta ostatnia jest specyficzna dla języka Java i nie jest dostępna w języku C#.
+//-----------------------------------------------------------------------------
+
+/**
+ * Zwraca sumę dwóch kolumn macierzy.
+ * @param hMatrix
+ * @param column1
+ * @param column2
+ * @return
+ */
+public static string GetColumnSum(int[][] hMatrix, int column1, int column2) 
+{
+    int[] bitsArray1 = hMatrix.Select(row => row[column1]).ToArray();
+    int[] bitsArray2 = hMatrix.Select(row => row[column2]).ToArray();
+    string sum = "";
+    for (int i = 0; i < 8; i++) {
+        sum += (bitsArray1[i] + bitsArray2[i] == 2) ? "0" : (bitsArray1[i] + bitsArray2[i]).ToString();
+    }
+    return sum;
+}
+
+/**
+ * Zmienia bit na przeciwny na określonej pozycji i zwraca pierwsze 8 bitów.
+ * @param bitsString łańcuch binarny
+ * @param position pozycja do zmiany
+ * @return 8 bitów łańcucha binarnego
+ */
+public static string CorrectErrorReturn8Bits(string bitsString, int position)
+{
+    if (position >= 0 && position < 8) {
+        return (bitsString[position] == '1') ? bitsString.Substring(0, position) + '0' + bitsString.Substring(position + 1, 7 - position) :
+                                               bitsString.Substring(0, position) + '1' + bitsString.Substring(position + 1, 7 - position);
+    }
+    else {
+        return bitsString.Substring(0, 8);
+    }
+}
+
+/**
+ * Dekoduje ciąg binarny do tekstu.
+ * @param decoded ciąg zawierający ciąg binarny.
+ * @return tekst
+ */
+public static string DecodeBinaryToString(string decoded)
+{
+    byte[] textBytes = new byte[decoded.Length / 8];
+    for (int i = 0; i < decoded.Length; i += 8) {
+        byte b = Convert.ToByte(decoded.Substring(i, 8), 2);
+        textBytes[i / 8] = b;
+    }
+    return Encoding.UTF8.GetString(textBytes);
+}
+
+public static int BitsToInt(string bitsString)
+{
+    int result = 0;
+    string reversed = new string(bitsString.Reverse().ToArray());
+    for (int i = 0; i < 8; i++)
+    {
+        string s = reversed.Substring(i, 1);
+        if (s == "1")
+        {
+            int temp = 1;
+            for (int j = 0; j < i; j++)
+            {
+                temp *= 2;
+            }
+            result += temp;
+        }
+    }
+    return result;
+}
+
+//-----------------------------------------------------------------------
+
+//Zauważ, że funkcja Reverse() została użyta do odwrócenia kolejności bitów w łańcuchu bitsString, ponieważ oryginalna funkcja bitsToInt korzystała z odwróconego łańcucha. //Funkcja ToArray() została użyta do utworzenia tablicy z odwróconego łańcucha.
+
+//-----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Single Correction
+
+//---------------------------------------------------------------
+
+
+ public static int[][] hMatrix = {                     
+            {1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0},
+            {1, 0, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0},
+            {0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0},
+            {0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1}
+        };
+
+        public static int numberOfHMatrixColumns = 4;
+        public static int errorPos1 = -1;
+		
+		
+/**
+ * Decodes encoded message (12 bits per character) to encoded message (8 bits per character) and corrects it if needed.
+ * @param encoded
+ * @return
+ */
+public static string DecodeToBinary(string encoded)
+{
+    string decoded = "";
+    for (int i = 0; i < encoded.Length; i += 12)
+        decoded += SingleCorrection.DecodeSingleCharacterAndCorrect(encoded.Substring(i, 12));
+
+    return decoded;
+}
+
+/**
+ * Decodes string containing 12 bits and corrects it if needed
+ * @param bitsString 12 bits string
+ * @return decoded bits string with error corrected (8 bits)
+ */
+public static string DecodeSingleCharacterAndCorrect(string bitsString)
+{
+    string heMatrix = Utils.CalculateHE(bitsString, numberOfHMatrixColumns, hMatrix, 12);
+    errorPos1 = -1;
+    for (int i = 0; i < 12; i++)
+        if (Utils.GetCol(hMatrix, i, numberOfHMatrixColumns).Equals(heMatrix))  //Diff occurs on the bit where column is the same as HE
+            errorPos1 = i;
+
+    return errorPos1 != -1 ? Utils.CorrectErrorReturn8bits(bitsString, errorPos1) : bitsString.Substring(0, 8); //Change the bit where error occured
+}
+
+
+
+//Double Correction
+
+//---------------------------------------------------------------
+
+public static int[,] hMatrix = new int[,] {
+    {0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0},
+    {1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0},
+    {1, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+    {0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0},
+    {1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0},
+    {0, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0},
+    {1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0},
+    {0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+};
+
+public static int numberOfHMatrixColumns = 8;
+public static int errorPos1 = -1;
+public static int errorPos2 = -1;
+
+/**
+ * Decodes encoded message (16 bits per character) to encoded message (8 bits per character) and corrects up to 2 mistakes in it.
+ * @param bitsString
+ * @return decoded string (8 bits per character)
+ */
+public static string Decode(string bitsString) {
+    string decoded = "";
+    for (int i = 0; i < bitsString.Length; i += 16)
+        decoded += Decode16bits(bitsString.Substring(i, 16));
+
+    return decoded;
+}
+
+/**
+ * Decode 16 bits string
+ * @param bitsString 16 bits string
+ * @return decoded bits string with error corrected (8 bit)
+ */
+public static string Decode16bits(string bitsString)
+{
+    string HE = Utils.CalculateHE(bitsString, numberOfHMatrixColumns, hMatrix, 16);
+    int errorPos1 = -1;
+    int errorPos2 = -1;
+    for (int i = 0; i < 16; i++) //Searching where error occurred
+    {
+        if (HE.Equals(Utils.GetCol(hMatrix, i, numberOfHMatrixColumns))) //Search for 1 error (HE column same with one of HMatrix column)
+        {
+            errorPos1 = i;
+            break;
+        }
+        for (int j = i + 1; j < 16; j++)
+        {
+            if (HE.Equals(Utils.GetColumnSum(hMatrix, i, j))) //Search for 2 error (HE column same with sum of two HMatrix columns)
+            {
+                errorPos1 = i;
+                errorPos2 = j;
+                break;
+            }
+        }
+    }
+    string tmp = errorPos1 != -1 ? Utils.CorrectErrorReturn8bits(bitsString, errorPos1) : bitsString.Substring(0, 8); //Change the bit where error occurred
+    return errorPos2 != -1 ? Utils.CorrectErrorReturn8bits(tmp, errorPos2) : tmp.Substring(0, 8); //Change the bit where error occurred
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//MAIN
+
+-------------------------------------------\
+
+
+using System;
+
+namespace Zad1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // SINGLE CORRECTION
+
+            // Encoding
+            string m = "abecadlo 123";
+            string encoded = Utils.encode(m, SingleCorrection.numberOfHMatrixColumns, SingleCorrection.hMatrix);
+            Console.WriteLine("Encoded: " + encoded);
+            encoded = encoded[0] == '1' ? '0' + encoded.Substring(1) : '1' + encoded.Substring(1);
+            Console.WriteLine("Encoded: " + encoded);
+
+            // Decoding
+            string decoded = SingleCorrection.decodeToBinary(encoded);
+            string decodedString = Utils.decodeBinaryToString(decoded);
+            Console.WriteLine(decodedString);
+
+            // DOUBLE CORRECTION
+
+            // Encoding
+            Console.WriteLine("Podwójna korekcja");
+            string m2 = "abecadlo 123";
+            string encoded2 = Utils.encode(m2, DoubleCorrection.numberOfHMatrixColumns, DoubleCorrection.hMatrix);
+            Console.WriteLine("Encoded:        " + encoded2);
+            encoded2 = encoded2[0] == '1' ? '0' + encoded2.Substring(1) : '1' + encoded2.Substring(1);
+            encoded2 = encoded2[2] == '1' ? encoded2.Substring(0, 2) + '0' + encoded2.Substring(3) : encoded2.Substring(0, 2) + '1' + encoded2.Substring(3);
+            Console.WriteLine("Encoded bledny: " + encoded2);
+
+            // Decoding
+            decoded = DoubleCorrection.decode(encoded2);
+            Console.WriteLine("Poprawiony zdekodowany:" + decoded);
+            decodedString = Utils.decodeBinaryToString(decoded);
+            Console.WriteLine(decodedString);
+
+            // int parseInt = Convert.ToInt32("011101000110", 2);
+            // int parseInt2 = Convert.ToInt32("01110100", 2);
+            // char c = (char)parseInt;
+            // char c2 = (char)parseInt2;
+            // Console.WriteLine(c);
+            // Console.WriteLine(c2);
+        }
+    }
+}
+
+

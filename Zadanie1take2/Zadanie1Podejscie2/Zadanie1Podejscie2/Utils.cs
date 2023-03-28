@@ -9,6 +9,31 @@ namespace Zadani1Podejscie2
     internal class Utils
     {
 
+        /*
+         
+---------------------------------------------------------------------------------------------------------------------
+         ENCODE
+---------------------------------------------------------------------------------------------------------------------
+         
+    1.  Metoda Encode przyjmuje jako parametry wiadomość do zakodowania (message), ilość kolumn macierzy kodującej Hamminga (hMatrixColumnsNumber) oraz samą macierz kodującą Hamminga (hMatrix).
+    
+    2.  Zmienna result służy do przechowywania zaszyfrowanej wiadomości w postaci ciągu bitów.
+    
+    3.  Metoda Encoding.UTF8.GetBytes(message) zamienia podaną wiadomość na tablicę bajtów (typ byte[]), co jest niezbędne do przetworzenia jej na postać binarną.
+    
+    4.  Pętla foreach iteruje po wszystkich bajtach w tablicy bytesArray i przekształca każdy bajt na postać binarną, dodając brakujące zera, jeśli długość binarnej reprezentacji bajtu jest mniejsza niż 8.
+    
+    5.  Następnie do zaszyfrowanej wiadomości (result) dodawane są kolejno zdekodowane bity i bity kontrolne uzyskane za pomocą metody CalculateHE.
+    
+    6.  Metoda CalculateHE przyjmuje jako parametry ciąg bitów, ilość kolumn macierzy kodującej, samą macierz kodującą oraz ilość bitów kontrolnych do wyznaczenia. Zwraca ona ciąg bitów kontrolnych o długości podanej jako ostatni argument.
+    
+        Na koniec metoda Encode zwraca zaszyfrowaną wiadomość w postaci ciągu bitów.
+
+---------------------------------------------------------------------------------------------------------------------
+
+
+         */
+
         public static string Encode(string message, int hMatrixColumnsNumber, int[][] hMatrix)
         {
             string result = "";
@@ -28,6 +53,34 @@ namespace Zadani1Podejscie2
             return result;
         }
 
+        /*
+---------------------------------------------------------------------------------------------------------------------
+         CalculateHE
+---------------------------------------------------------------------------------------------------------------------
+
+    1.  Metoda CalculateHE przyjmuje jako parametry ciąg bitów do zakodowania (message), ilość kolumn macierzy kodującej Hamminga (hMatrixColumnsNumber), samą macierz kodującą Hamminga (hMatrix) oraz ilość bitów kontrolnych do wyznaczenia (encode).
+    
+    2.  Zmienna result służy do przechowywania bitów kontrolnych wyznaczonych na podstawie przetworzonej wiadomości message.
+
+    3.  Pierwsza pętla for iteruje po kolumnach macierzy kodującej Hamminga.
+
+    4.  Wewnętrzna pętla for iteruje po ilości bitów, które mają być kodowane przez daną kolumnę.
+
+    5.  Zmienne originalBit i matrixBit przechowują wartości bitów dla danej kolumny macierzy kodującej i dla danego bitu w przetwarzanej wiadomości.
+    
+    6.  Wartość originalBit jest pobierana za pomocą metody Substring i zamieniana na typ int za pomocą metody int.Parse.
+
+    7.  Wartość matrixBit jest pobierana z macierzy kodującej na podstawie numeru kolumny i numeru bitu w przetwarzanej wiadomości.
+
+    8.  Zmienna rowResult przechowuje wynik mnożenia bitów dla danej kolumny macierzy kodującej i danego bitu w przetwarzanej wiadomości.
+
+    9.  Na koniec zmienna result dodaje wynik modulo 2 z wartością rowResult, co pozwala na uzyskanie bitów kontrolnych dla danej kolumny macierzy kodującej.
+
+    10. Metoda CalculateHE zwraca ciąg bitów kontrolnych o długości podanej jako ostatni argument.
+
+---------------------------------------------------------------------------------------------------------------------
+        */
+
         public static string CalculateHE(string message, int hMatrixColumnsNumber, int[][] hMatrix, int encode)
         {
             string result = "";
@@ -45,18 +98,26 @@ namespace Zadani1Podejscie2
             return result;
         }
 
-        //-----------------------------------------------------------------------------
-
-        //Zwróć uwagę, że przepisując kod, musiałem również przepisać metodę CalculateHE, która jest wykorzystywana w oryginalnej metodzie encode.
-
-        //-----------------------------------------------------------------------------
-
         /**
          * Zwraca ciąg znaków zawierający wartości kolumny macierzy
-         * @param matrix
-         * @param column
-         * @param numberOfColumns
-         * @return
+         */
+
+        /*
+---------------------------------------------------------------------------------------------------------------------
+         GetCol
+---------------------------------------------------------------------------------------------------------------------
+
+    1.  Metoda GetCol przyjmuje jako parametry dwuwymiarową macierz bitów matrix, numer kolumny, z której chcemy pobrać bity (column) oraz ilość kolumn w macierzy (numberOfColumns).
+
+    2.  Za pomocą metody Select i wyrażenia lambda row => row[column], z dwuwymiarowej macierzy matrix wybierane są bity z kolumny column i przechowywane w tablicy bitsArray.
+
+    3.  Zmienna result służy do przechowywania ciągu bitów z wybranej kolumny.
+
+    4.  Pętla for iteruje po ilości kolumn w macierzy i dodaje kolejne bity z tablicy bitsArray do zmiennej result.
+
+    5.  Metoda GetCol zwraca ciąg bitów o długości numberOfColumns z wybranej kolumny macierzy.
+
+---------------------------------------------------------------------------------------------------------------------
          */
         public static string GetCol(int[][] matrix, int column, int numberOfColumns)
         {
@@ -69,16 +130,28 @@ namespace Zadani1Podejscie2
             return result;
         }
 
-        //-----------------------------------------------------------------------------
-        //Uwaga: w przepisanym kodzie użyłem metody Select zamiast mapToInt, ponieważ ta ostatnia jest specyficzna dla języka Java i nie jest dostępna w języku C#.
-        //-----------------------------------------------------------------------------
+        /*
+---------------------------------------------------------------------------------------------------------------------
+         GetColumnSum
+---------------------------------------------------------------------------------------------------------------------        
 
+    1.  Metoda GetColumnSum przyjmuje jako parametry dwuwymiarową macierz bitów hMatrix, numery dwóch kolumn, których bity chcemy dodać (column1 i column2).
+
+    2.  Za pomocą metody Select i wyrażeń lambda row => row[column1] oraz row => row[column2], z dwuwymiarowej macierzy hMatrix wybierane są bity z kolumn column1 i column2 i przechowywane odpowiednio w tablicach bitsArray1 i bitsArray2.
+
+    3.  Zmienna sum służy do przechowywania sumy bitów z dwóch wybranych kolumn.
+
+    4.  Pętla for iteruje po długości jednej z kolumn (zakładając, że kolumny są tej samej długości) i dla każdego bitu oblicza sumę bitów z bitsArray1 i bitsArray2.
+
+    5.  Jeśli suma bitów wynosi 2, oznacza to, że oba bity są równe 1 i należy zwrócić bit 0 (ponieważ w kodzie Hamminga wykorzystujemy arytmetykę modulo 2). W przeciwnym przypadku zwracana jest suma bitów.
+
+    6.  Metoda GetColumnSum zwraca ciąg bitów będący sumą bitów z dwóch wybranych kolumn macierzy hMatrix.
+
+---------------------------------------------------------------------------------------------------------------------
+
+         */
         /**
          * Zwraca sumę dwóch kolumn macierzy.
-         * @param hMatrix
-         * @param column1
-         * @param column2
-         * @return
          */
         public static string GetColumnSum(int[][] hMatrix, int column1, int column2)
         {
@@ -92,11 +165,32 @@ namespace Zadani1Podejscie2
             return sum;
         }
 
+
+
+        /*
+---------------------------------------------------------------------------------------------------------------------
+         CorrectErrorReturn8Bits
+---------------------------------------------------------------------------------------------------------------------   
+
+    1.  Metoda CorrectErrorReturn8Bits przyjmuje jako parametry ciąg bitów bitsString i pozycję bitu, którego wartość chcemy zmienić (position).
+
+    2.  Warunek if sprawdza, czy pozycja bitu jest prawidłowa (w zakresie od 0 do 7, bo kod Hamminga (16,8) używa 8-bitowych bloków danych).
+
+    3.  W zależności od wartości bitu na pozycji position (czy wynosi 0 czy 1), na tej pozycji zostanie zamieniony bit na przeciwny. Do tego celu wykorzystywane jest wyrażenie warunkowe - jeśli bit na pozycji position wynosi 1, to zostanie zwrócony ciąg bitów, w którym na pozycji position znajduje się 0, a w przeciwnym wypadku - 1.
+
+    4.  Jeśli pozycja position nie jest prawidłowa, to zwracany jest ciąg bitów bez zmian.
+
+    5.  Metoda CorrectErrorReturn8Bits zwraca ciąg bitów bitsString, w którym na pozycji position został zmieniony bit na przeciwny lub (jeśli pozycja position była nieprawidłowa) ciąg bitów bitsString bez zmian.
+
+---------------------------------------------------------------------------------------------------------------------
+         */
+
         /**
          * Zmienia bit na przeciwny na określonej pozycji i zwraca pierwsze 8 bitów.
-         * @param bitsString łańcuch binarny
-         * @param position pozycja do zmiany
-         * @return 8 bitów łańcucha binarnego
+         *   bitsString = zawiera łańcuch binarny
+         *   position = pozycja błędu ( do zmiany )
+         *   
+         *   zwraca 8 bitów łańcucha binarnego
          */
         public static string CorrectErrorReturn8Bits(string bitsString, int position)
         {
@@ -111,10 +205,29 @@ namespace Zadani1Podejscie2
             }
         }
 
+        /*
+---------------------------------------------------------------------------------------------------------------------
+         DecodeBinaryToString
+---------------------------------------------------------------------------------------------------------------------   
+
+Funkcja DecodeBinaryToString jest odpowiedzialna za konwersję ciągu binarnego na tekst w formacie UTF-8. Poniżej znajdują się komentarze do poszczególnych linii kodu:
+
+    1.  byte[] textBytes = new byte[decoded.Length / 8]; - tworzy tablicę bajtów o rozmiarze równym długości ciągu binarnego podzielonej przez 8, ponieważ każdy znak w kodowaniu UTF-8 zajmuje 8 bitów.
+
+    2.  for (int i = 0; i < decoded.Length; i += 8) - iteruje po każdych kolejnych 8 bitach w ciągu binarnym.
+
+    3.  byte b = Convert.ToByte(decoded.Substring(i, 8), 2); - konwertuje ciąg 8 bitów na pojedynczy bajt, używając metody ToByte z klasy Convert.
+
+    4.  textBytes[i / 8] = b; - przypisuje otrzymany bajt do odpowiedniej pozycji w tablicy bajtów.
+
+    5.  return Encoding.UTF8.GetString(textBytes); - konwertuje tablicę bajtów na ciąg tekstowy w formacie UTF-8, używając metody GetString z klasy Encoding. Zwraca ostatecznie zdekodowany tekst.
+
+---------------------------------------------------------------------------------------------------------------------
+         */
+
         /**
          * Dekoduje ciąg binarny do tekstu.
-         * @param decoded ciąg zawierający ciąg binarny.
-         * @return tekst
+         *  decoded = ciąg zawierający ciąg binarny.
          */
         public static string DecodeBinaryToString(string decoded)
         {
@@ -127,31 +240,6 @@ namespace Zadani1Podejscie2
             return Encoding.UTF8.GetString(textBytes);
         }
 
-        public static int BitsToInt(string bitsString)
-        {
-            int result = 0;
-            string reversed = new string(bitsString.Reverse().ToArray());
-            for (int i = 0; i < 8; i++)
-            {
-                string s = reversed.Substring(i, 1);
-                if (s == "1")
-                {
-                    int temp = 1;
-                    for (int j = 0; j < i; j++)
-                    {
-                        temp *= 2;
-                    }
-                    result += temp;
-                }
-            }
-            return result;
-        }
-
-        //-----------------------------------------------------------------------
-
-        //Zauważ, że funkcja Reverse() została użyta do odwrócenia kolejności bitów w łańcuchu bitsString, ponieważ oryginalna funkcja bitsToInt korzystała z odwróconego łańcucha. //Funkcja ToArray() została użyta do utworzenia tablicy z odwróconego łańcucha.
-
-        //-----------------------------------------------------------------------
 
     }
 }

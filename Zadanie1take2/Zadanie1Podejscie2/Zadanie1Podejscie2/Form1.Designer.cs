@@ -91,7 +91,7 @@
             // 
             // textBoxOutput
             // 
-            textBoxOutput.Location = new Point(534, 7);
+            textBoxOutput.Location = new Point(536, 7);
             textBoxOutput.Multiline = true;
             textBoxOutput.Name = "textBoxOutput";
             textBoxOutput.Size = new Size(227, 292);

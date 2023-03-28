@@ -7,6 +7,31 @@ using Zadani1Podejscie2;
 
 namespace Zadani1Podejscie2
 {
+
+    /*
+     
+    Kod Hamminga (12,8) to kod korekcyjny błędów, który składa się z 12 bitów, z czego 8 bitów są danymi, a pozostałe 4 są bitami kontrolnymi.
+    Działanie kodu Hamminga umożliwia wykrycie i korekcję pojedynczych błędów w bloku danych, 
+    co czyni go bardziej niezawodnym niż proste kody parzystości.
+
+    Działanie kodu Hamminga (12,8) można opisać w następujących punktach:
+
+    1.  Dzieli się dane wejściowe na bloki po 8 bitów.
+
+    2.  Dla każdego bloku danych, kod Hamminga generuje 4 bity kontrolne, 
+        które są umieszczane na 4 ostatnich pozycjach (9-12), kanonicznie bity parzystości umieszczane są na 
+        pozycjach będących potęgami liczby "2" czyli: 1, 2, 4 i 8.
+
+    3.  Aby sprawdzić poprawność otrzymanego bloku danych, kod Hamminga wykorzystuje sumę kontrolną bitów, 
+        które są przypisane do pozycji kontrolnych. Jeśli suma kontrolna jest nieparzysta lub jeśli którekolwiek
+        z bitów danych jest niepoprawny, blok danych jest uznawany za uszkodzony.
+
+    4.  W przypadku wykrycia błędu, kod Hamminga może skorygować jedno z bitów danych, którego wartość jest niepoprawna. 
+        W tym celu kod wykorzystuje informacje zawarte w bitach kontrolnych.
+
+   
+     
+     */
     internal class SingleCorrection
     {
 

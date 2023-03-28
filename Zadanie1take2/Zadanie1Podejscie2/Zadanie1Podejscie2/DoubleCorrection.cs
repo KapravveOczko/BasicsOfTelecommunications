@@ -7,6 +7,31 @@ using Zadani1Podejscie2;
 
 namespace Zadani1Podejscie2
 {
+
+    /*
+Kod Hamminga (16,8) może zostać zmodyfikowany tak, aby umożliwić wykrycie i korekcję dwóch błędów. 
+Działanie takiego kodu Hamminga (16,8) można opisać w następujących punktach:
+
+    1. Dzieli się dane wejściowe na bloki po 8 bitów.
+
+    2. Dla każdego bloku danych, kod Hamminga generuje 8 bitów kontrolnych, które są umieszczane na 8 ostatnich pozycjach 
+    kanonicznie bity parzystości umieszczane są na 
+        pozycjach będących potęgami liczby "2" czyli: 1, 2, 4, 8, 16, 32, 64 i 128.
+
+    3. Na pozycjach kontrolnych umieszcza się wartości, które informują o poprawności poszczególnych bitów danych. 
+    Wartości te są wyznaczane na podstawie sumy kontrolnej bitów, które mają wpływ na daną pozycję kontrolną.
+
+    4. Aby sprawdzić poprawność otrzymanego bloku danych, kod Hamminga wykorzystuje sumę kontrolną bitów, które są przypisane do pozycji kontrolnych. 
+    Jeśli suma kontrolna jest nieparzysta lub jeśli jednocześnie wystąpiły dwa błędy w bloku danych, blok danych jest uznawany za uszkodzony.
+
+    5. W przypadku wykrycia błędu, kod Hamminga wykorzystuje informacje zawarte w bitach kontrolnych, aby określić pozycje błędnych bitów.
+
+    6.  Następnie, kod Hamminga dokonuje korekcji błędów, odwracając wartości błędnych bitów.
+
+Jeśli wystąpiły dwa błędy, a kod nie jest w stanie ich skorygować, blok danych jest uznawany za uszkodzony.
+Działanie kodu Hamminga (16,8) z możliwością korekcji dwóch błędów umożliwia jeszcze większą niezawodność 
+transmisji danych i minimalizuje ryzyko błędów w komunikacji między urządzeniami.
+     */
     internal class DoubleCorrection
     {
 

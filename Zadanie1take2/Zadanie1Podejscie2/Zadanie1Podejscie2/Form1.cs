@@ -29,27 +29,27 @@ namespace Zadanie1Podejscie2
 
         private void button4Parrity_Click(object sender, EventArgs e)
         {
-            textBoxTranslate.Text = Utils.Encode(textBoxInput.Text, SingleCorrection.numberOfHMatrixColumns, SingleCorrection.hMatrix);
+            textBoxTranslate.Text = Functions.Encode(textBoxInput.Text, Parrity4.hMatrixColumns, Parrity4.hMatrix);
         }
 
         private void button8Parrity_Click(object sender, EventArgs e)
         {
-            textBoxTranslate.Text = Utils.Encode(textBoxInput.Text, DoubleCorrection.numberOfHMatrixColumns, DoubleCorrection.hMatrix);
+            textBoxTranslate.Text = Functions.Encode(textBoxInput.Text, Parrity8.hMatrixColumns, Parrity8.hMatrix);
         }
 
         private void button4Decode_Click(object sender, EventArgs e)
         {
-            textBoxOutput.Text = Utils.DecodeBinaryToString(SingleCorrection.DecodeToBinary(textBoxTranslate.Text));
+            textBoxOutput.Text = Functions.BinaryToString(Parrity4.DecodeToBinary(textBoxTranslate.Text));
         }
 
         private void button8Decode_Click(object sender, EventArgs e)
         {
-            textBoxOutput.Text = Utils.DecodeBinaryToString(DoubleCorrection.Decode(textBoxTranslate.Text));
+            textBoxOutput.Text = Functions.BinaryToString(Parrity8.Decode(textBoxTranslate.Text));
         }
 
         private void buttonDecode_Click(object sender, EventArgs e)
         {
-            textBoxOutput.Text = Utils.DecodeBinaryToString(textBoxTranslate.Text);
+            textBoxOutput.Text = Functions.BinaryToString(textBoxTranslate.Text);
         }
 
         private void buttonSave_Click(object sender, EventArgs e)

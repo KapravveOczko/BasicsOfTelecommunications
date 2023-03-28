@@ -79,5 +79,12 @@ namespace Zadanie1
             showMyImage("img.jpg", 312, 380);
         }
 
+        private void buttonTranslateToOne_Click(object sender, EventArgs e)
+        {
+            OneCorrection oneCorrection = new OneCorrection();
+            textBoxTranslated.Text = oneCorrection.encodeText(textBoxInput.Text);
+            //int[] tmp = { 1, 0,0,1,1,1,1,0 };
+            //textBoxOutput.Text = oneCorrection.encodeWord(tmp);
+        }
     }
 }

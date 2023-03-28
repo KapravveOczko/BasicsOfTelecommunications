@@ -38,8 +38,8 @@ namespace Zadanie1
 
 
         public static int[][] H = new int[][] { //parity bits at end; 
-        new int[] {1,1,0,1,1,0,1,1, 1,0,0,0},
-        new int[] {1,0,1,1,0,1,1,1, 0,1,0,0},
+        new int[] {1,1,0,1,1,0,1,0, 1,0,0,0},
+        new int[] {1,0,1,1,0,1,1,0, 0,1,0,0},
         new int[] {0,1,1,1,0,0,0,1, 0,0,1,0},
         new int[] {0,0,0,0,1,1,1,1, 0,0,0,1}
                                             };
@@ -47,9 +47,12 @@ namespace Zadanie1
 
         public string encodeText(string text)
         {
-            byte[] textInBytes = Encoding.UTF8.GetBytes(text);
+            string textInBytes = string.Join("", Encoding.UTF8.GetBytes(text).Select(n => Convert.ToString(n, 2).PadLeft(8, '0')));
+
+
             int[] word = new int[8];
             int position = 0;
+            int tmp;
             string encodedText = "";
 
             //textInBytes = holds text translated to bytes
@@ -57,14 +60,26 @@ namespace Zadanie1
             //position = used to transver bits from textInBytes to word[]
             //encodedText = holds encoded text
 
-            for (int i = 0; i!=text.Length*8; i++)
+            for (int i = 0; i != textInBytes.Length; i++) //there is a problem
             {
-                word[position] = textInBytes[i];
+                if (textInBytes[i].Equals("1"))
+                {
+                    tmp = 1;
+                }
+                else
+                {
+                    tmp = 0;
+                }
+
+                word[position] = tmp;
+
                 if (position == 7)
                 {
                     position = 0;
                 }
+                position++;
                 encodedText += encodeWord(word);
+                
             }
 
             return encodedText;
@@ -132,7 +147,7 @@ namespace Zadanie1
 
             for (int i=0; i!=4; i++)
             {
-                if ((i==0) || (test[i]!=0)) 
+                if ((i==0) || (test[i]!=0))     
                 {
                     parrityOutput = parrityOutput + 1;
                 }
@@ -142,11 +157,11 @@ namespace Zadanie1
                 }
                 if ((i == 2) || (test[i] != 0))
                 {
-                    parrityOutput = parrityOutput + 3;
+                    parrityOutput = parrityOutput + 4;
                 }
                 if ((i == 3) || (test[i] != 0))
                 {
-                    parrityOutput = parrityOutput + 4;
+                    parrityOutput = parrityOutput + 8;
                 }
             }
 
@@ -173,7 +188,7 @@ namespace Zadanie1
 
             for (int i=0; i!= length; i++)
             {
-                output = output + input[i];
+                output = output + input[i].ToString();
             }
             return output;
         }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             buttonTranslate = new Button();
             button4Parrity = new Button();
             textBoxInput = new TextBox();
@@ -37,6 +38,9 @@
             button4Decode = new Button();
             button8Decode = new Button();
             buttonDecode = new Button();
+            contextMenuStrip1 = new ContextMenuStrip(components);
+            buttonSave = new Button();
+            buttonLoad = new Button();
             SuspendLayout();
             // 
             // buttonTranslate
@@ -95,7 +99,7 @@
             // 
             // button4Decode
             // 
-            button4Decode.Location = new Point(338, 345);
+            button4Decode.Location = new Point(594, 345);
             button4Decode.Name = "button4Decode";
             button4Decode.Size = new Size(112, 34);
             button4Decode.TabIndex = 6;
@@ -105,7 +109,7 @@
             // 
             // button8Decode
             // 
-            button8Decode.Location = new Point(338, 385);
+            button8Decode.Location = new Point(594, 385);
             button8Decode.Name = "button8Decode";
             button8Decode.Size = new Size(112, 34);
             button8Decode.TabIndex = 7;
@@ -115,7 +119,7 @@
             // 
             // buttonDecode
             // 
-            buttonDecode.Location = new Point(338, 305);
+            buttonDecode.Location = new Point(594, 305);
             buttonDecode.Name = "buttonDecode";
             buttonDecode.Size = new Size(112, 34);
             buttonDecode.TabIndex = 8;
@@ -123,11 +127,39 @@
             buttonDecode.UseVisualStyleBackColor = true;
             buttonDecode.Click += buttonDecode_Click;
             // 
+            // contextMenuStrip1
+            // 
+            contextMenuStrip1.ImageScalingSize = new Size(24, 24);
+            contextMenuStrip1.Name = "contextMenuStrip1";
+            contextMenuStrip1.Size = new Size(61, 4);
+            // 
+            // buttonSave
+            // 
+            buttonSave.Location = new Point(334, 305);
+            buttonSave.Name = "buttonSave";
+            buttonSave.Size = new Size(112, 34);
+            buttonSave.TabIndex = 9;
+            buttonSave.Text = "Save";
+            buttonSave.UseVisualStyleBackColor = true;
+            buttonSave.Click += buttonSave_Click;
+            // 
+            // buttonLoad
+            // 
+            buttonLoad.Location = new Point(334, 345);
+            buttonLoad.Name = "buttonLoad";
+            buttonLoad.Size = new Size(112, 34);
+            buttonLoad.TabIndex = 10;
+            buttonLoad.Text = "Load";
+            buttonLoad.UseVisualStyleBackColor = true;
+            buttonLoad.Click += buttonLoad_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(buttonLoad);
+            Controls.Add(buttonSave);
             Controls.Add(buttonDecode);
             Controls.Add(button8Decode);
             Controls.Add(button4Decode);
@@ -154,5 +186,8 @@
         private Button button4Decode;
         private Button button8Decode;
         private Button buttonDecode;
+        private ContextMenuStrip contextMenuStrip1;
+        private Button buttonSave;
+        private Button buttonLoad;
     }
 }
